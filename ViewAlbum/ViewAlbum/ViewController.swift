@@ -12,18 +12,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let number = 10
-        var success = 0
-        success = 1
-        print(number);
-        print(success);
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //按钮事件
+    @IBAction func btnClick(sender: UIButton) {
+        //跳转页面
+        let photosVC  = AllPhotosViewController()
+        present(photosVC, animated: true, completion: nil)
     }
-
 
 }
 
