@@ -8,22 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,BTBaseViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let number = 10
-        var success = 0
-        success = 1
-        print(number);
-        print(success);
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //按钮事件
+    @IBAction func btnClick(_ sender: UIButton) {
+        //跳转页面
+     
+        let rootVC = BTViewAlbum(delegate: self)
+        let nav = BTNavgationBrowser(rootViewController: rootVC)
+        
+        self.present(nav, animated: true, completion: nil)
     }
-
-
 }
+
+/*extension ViewController: BTBaseViewControllerDelegate{
+
+
+}*/
 
