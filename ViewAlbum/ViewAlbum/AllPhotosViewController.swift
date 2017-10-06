@@ -11,6 +11,34 @@ import Photos
 
 class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, UICollectionViewDelegate, UICollectionViewDataSource{
     
+    //MARK:- 属性的声明
+    //获取屏幕宽度
+    private var SCREEN_WIDTH:CGFloat = UIScreen.main.bounds.size.width
+    private var SCREEN_HEIGHT:CGFloat = UIScreen.main.bounds.size.height
+    
+    private let headerView = UIView()
+    private var headerHeight:CGFloat = 50
+    
+    private let completedButton = UIButton()
+    //  已选图片数量显示容器
+    private let countLable = UILabel()
+    
+    
+    //  载体
+    private var myCollectionView: UICollectionView!
+    //  collectionView 布局
+    private let flowLayout = UICollectionViewFlowLayout()
+    //  collectionviewcell 复用标识
+    private let cellIdentifier = "myCollectionCell"
+    //  数据源
+    private var photosArray = PHFetchResult<AnyObject>()
+    //  已选图片数组，数据类型是 PHAsset
+    private var seletedPhotosArray = [PHAsset]()
+   
+    // 解决由于cell复用图片重复选择的问题
+    private var divideArray = [Int]()
+
+    //MARK:- viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -24,31 +52,9 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
         getAllPhotos()
         
         }
-    //获取屏幕宽度
-    private var SCREEN_WIDTH:CGFloat = UIScreen.main.bounds.size.width
-    private var SCREEN_HEIGHT:CGFloat = UIScreen.main.bounds.size.height
-    
-    private let headerView = UIView()
-    private var headerHeight:CGFloat = 50
-    
-    private let completedButton = UIButton()
-    //  已选择图片数量
-    private let countLable = UILabel()
     
     
-    //  载体
-    private var myCollectionView: UICollectionView!
-    //  collectionView 布局
-    private let flowLayout = UICollectionViewFlowLayout()
-    //  collectionviewcell 复用标识
-    private let cellIdentifier = "myCell"
-    //  数据源
-    private var photosArray = PHFetchResult<AnyObject>()
-    //  已选图片数组，数据类型是 PHAsset
-    private var seletedPhotosArray = [PHAsset]()
-    
-    
-    //添加头view和底view的方法
+    //MARK:- 添加头view和底view的方法
     private func addHeaderViewAndBottomView()  {
         //添加头
         headerView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: headerHeight)
@@ -83,8 +89,8 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
         overLabel.font = UIFont.systemFont(ofSize: 18)
         completedButton.addSubview(overLabel)
         
-        countLable.frame = CGRect(x: SCREEN_WIDTH / 2 - 25, y: 10, width: 24, height: 24)
-        countLable.backgroundColor = .green
+        countLable.frame = CGRect(x: SCREEN_WIDTH / 2 - 30, y: 10, width: 24, height: 24)
+        countLable.backgroundColor = .blue
         countLable.textColor = .white
         countLable.layer.masksToBounds = true
         countLable.layer.cornerRadius = countLable.bounds.size.height / 2
@@ -97,7 +103,7 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
         self.dismiss(animated: true, completion: nil)
     }
     
-    //MARK：-获取全部图片
+    //MARK:- 获取全部图片
     private func getAllPhotos(){
         PHPhotoLibrary.shared().register(self)
         
@@ -107,13 +113,17 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
         let allResults = PHAsset.fetchAssets(with: allOptions)
         photosArray = allResults as! PHFetchResult<AnyObject>
         
+        //每个图片设置一个初始标识符,数量和数据源数组的count保持一致，里面都是一些0，1标识，其中0代表未选择，1代表选择
+        for _ in 0 ..< allResults.count {
+           divideArray.append(0)
+        }
     }
     
     func photoLibraryDidChange(_ changeInstance: PHChange){
-        getAllPhotos()
+         getAllPhotos()
     }
     
-    //MARK：-添加collectionView
+    //MARK:- 添加collectionView
     private func createCollectionView(){
         // 竖屏时每行显示4张图片
         let shape: CGFloat = 5
@@ -133,7 +143,7 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
         view.addSubview(myCollectionView)
     }
     
-    //  collectionView delegate
+    //MARK:- collectionView delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosArray.count
     }
@@ -150,10 +160,25 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("进入这个方法了")
         let currentCell = collectionView.cellForItem(at: indexPath) as! MyCollectionViewCell
         currentCell.isChoose = !currentCell.isChoose
-        seletedPhotosArray.append(photosArray[indexPath.row] as! PHAsset)
+        
+        //解决单元格复用导致统计选择图片的个数问题
+        if currentCell.isChoose {
+            divideArray[indexPath.row] = 1
+            if !seletedPhotosArray.contains(photosArray[indexPath.row] as! PHAsset) {
+                seletedPhotosArray.append(photosArray[indexPath.row] as! PHAsset)
+            }
+        }else{
+            divideArray[indexPath.row] = 0
+            if seletedPhotosArray.contains(photosArray[indexPath.row] as! PHAsset) {
+                for (index, value) in seletedPhotosArray.enumerated() {
+                    if value == photosArray[indexPath.row] as! PHAsset {
+                        seletedPhotosArray.remove(at: index)
+                    }
+                }
+            }
+        }
         completedButtonShow()
     }
     
@@ -168,14 +193,10 @@ class AllPhotosViewController: UIViewController , PHPhotoLibraryChangeObserver, 
             originY = SCREEN_HEIGHT
             flowLayout.sectionInset.bottom = 0
         }
-        
+ 
         UIView.animate(withDuration: 0.2) { 
             self.completedButton.frame.origin.y = originY
             self.countLable.text = String(self.seletedPhotosArray.count)
-            
-            UIView.animate(withDuration: 0.2, animations: { 
-                self.countLable.transform = CGAffineTransform(scaleX: 0.35, y: 0.35)
-            })
         }
        
     }
