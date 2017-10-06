@@ -35,7 +35,7 @@ class BTViewAlbum: BTBaseViewController {
     
     func setDefault() {
         view.backgroundColor = UIColor.white
-        title = "照片"
+        title = "手机相薄"
     }
     
     //#MARK: 懒加载
@@ -122,7 +122,10 @@ extension BTViewAlbum: UITableViewDelegate, UITableViewDataSource{
         
         let model = self.photoArray[indexPath.row]
         
-        let photoVC = BTPhotosController(delegate: self.delegate!)
+        /*let photoVC = BTPhotosController(delegate: self.delegate!)
+        photoVC.photoColl = model.photoColl*/
+        
+        let photoVC = BTAllPhotosController(delegate: self.delegate!)
         photoVC.photoColl = model.photoColl
         
         self.navigationController?.pushViewController(photoVC, animated: true)

@@ -18,6 +18,13 @@ let BTNavgation_titleTextAttributes = [NSForegroundColorAttributeName : UIColor.
 let BTTableViewCellReuseIdentifier = "tableViewCellID"
 let BTCollectionViewCellReuseIdentifier = "collectionViewCellID"
 
+
+let SCREEN_WIDTH:CGFloat = UIScreen.main.bounds.size.width
+let SCREEN_HEIGHT:CGFloat = UIScreen.main.bounds.size.height
+let HEARERHEIGHT:CGFloat = 50
+let COUNTlABLEWH:CGFloat = 24
+let BT_MAX_SELECTED_PHOTO_COUNT = 4
+
 //MARK: 相册分类界面
 let BTPhotoCollTableViewCell_ImageSize = CGSize(width: 50, height: 50)
 let BTPhotoCollTableViewCell_Image = UIImage(named: "plc_icon")
@@ -28,6 +35,9 @@ let BTPhotoCollTableViewCell_SubtitleFont = UIFont.systemFont(ofSize: 14)
 let BTPhotoCollTableViewCell_Height: CGFloat = 66
 
 
+//MARK: 照片缩略图界面
+let HBPhotos_select_YES_Icon = UIImage(named: "seleced")
+let HBPhotos_select_NO_Icon = UIImage(named: "disSelect")
 
 //MARK: UI 设置 ------------------ END
 let KEY_HB_ORIGINIMAGE = "KEY_HB_ORIGINIMAGE"
@@ -180,6 +190,4 @@ extension UIView {
             })
         })
     }
-    
-    
 }

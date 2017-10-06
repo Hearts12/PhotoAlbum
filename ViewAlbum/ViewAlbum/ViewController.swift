@@ -17,9 +17,7 @@ class ViewController: UIViewController,BTBaseViewControllerDelegate {
     //按钮事件
     @IBAction func btnClick(_ sender: UIButton) {
         //跳转页面
-       /* let photosVC  = AllPhotosViewController()
-        present(photosVC, animated: true, completion: nil)*/
-        
+     
         let rootVC = BTViewAlbum(delegate: self)
         let nav = BTNavgationBrowser(rootViewController: rootVC)
         
