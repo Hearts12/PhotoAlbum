@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController,BTBaseViewControllerDelegate {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,7 @@ class ViewController: UIViewController,BTBaseViewControllerDelegate {
     }
 }
 
-/*extension ViewController: BTBaseViewControllerDelegate{
+extension ViewController: BTBaseViewControllerDelegate{
 
-
-}*/
+}
 

@@ -17,8 +17,10 @@ let BTNavgation_titleTextAttributes = [NSForegroundColorAttributeName : UIColor.
 //MARK: TableViewCell
 let BTTableViewCellReuseIdentifier = "tableViewCellID"
 let BTCollectionViewCellReuseIdentifier = "collectionViewCellID"
+let BTPreViewCellReuseIdentifier = "previewCollectionCellID"
 
 
+let SCREEN_SIZE:CGSize = UIScreen.main.bounds.size
 let SCREEN_WIDTH:CGFloat = UIScreen.main.bounds.size.width
 let SCREEN_HEIGHT:CGFloat = UIScreen.main.bounds.size.height
 let HEARERHEIGHT:CGFloat = 50
