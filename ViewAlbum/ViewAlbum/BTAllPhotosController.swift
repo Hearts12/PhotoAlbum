@@ -9,7 +9,18 @@
 import UIKit
 import Photos
 
+let val:Int = 10
+
+protocol BTPreviewControllerDelegate: NSObjectProtocol {
+    
+    func fixChooseCell(it :Int)
+
+}
+
 class BTAllPhotosController: BTBaseViewController {
+    
+    weak var previewDelegate: BTPreviewControllerDelegate?
+    
     
     var photoColl: PHAssetCollection? {
         
@@ -102,8 +113,16 @@ class BTAllPhotosController: BTBaseViewController {
     
     //MARK: 图片选择后点击完成按钮要做的动作
     @objc fileprivate func completedBtnClick(){
+       print("完成按钮点击了")
+        
+      //_ = self.navigationController?.popToRootViewController(animated: true)
        
-    }
+        let preVC = BTPreviewController(delegate: self.delegate!)
+        preVC.selectPhotos = self.seletedPhotosArray
+        
+        self.navigationController?.pushViewController(preVC, animated: true)
+    
+   }
     
     fileprivate lazy var overLabel: UILabel = {
         let label = UILabel(frame: .zero)
@@ -124,7 +143,7 @@ class BTAllPhotosController: BTBaseViewController {
         return label
     }()
     
-    //MARK: 页面添加collection
+    //MARK: 页面添加collection以及底部完成按钮
     fileprivate func setUpCollection() {
         
         self.view.backgroundColor = UIColor.white
@@ -137,9 +156,10 @@ class BTAllPhotosController: BTBaseViewController {
         self.completedButton.addSubview(self.countLable)
     }
     
-    
+    //#MARK: 界面重新布局
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         collectionView.frame = CGRect(x: 0, y: HEARERHEIGHT, width: self.view.BT_W, height: self.view.BT_H - HEARERHEIGHT)
         
         completedButton.frame = CGRect(x: 0, y:self.view.BT_H - HEARERHEIGHT, width: self.view.BT_W, height: HEARERHEIGHT)

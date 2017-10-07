@@ -57,6 +57,7 @@ class BTViewAlbum: BTBaseViewController {
     //#MARK: 获取系统相册资源
     func getPhotos() {
         
+        //1. 相册访问权限的判断
         PHPhotoLibrary.requestAuthorization { (status: PHAuthorizationStatus) in
             if status == .notDetermined{
                print("NotDetermined")
@@ -94,7 +95,7 @@ class BTViewAlbum: BTBaseViewController {
                 
                 DispatchQueue.main.async {
                     
-                    self.authorLable.text = "请在iPhone的\"设置-隐私-照片\"选项中，\n允许访问你的手机相册。"
+                    self.authorLable.text = "请开启手机相册访问权限"
                     self.view.addSubview(self.authorLable)
                     
                 }
@@ -121,9 +122,6 @@ extension BTViewAlbum: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let model = self.photoArray[indexPath.row]
-        
-        /*let photoVC = BTPhotosController(delegate: self.delegate!)
-        photoVC.photoColl = model.photoColl*/
         
         let photoVC = BTAllPhotosController(delegate: self.delegate!)
         photoVC.photoColl = model.photoColl
@@ -154,13 +152,18 @@ class BTNavgationBrowser: UINavigationController {
 
 //MARK: 协议
 @objc protocol BTBaseViewControllerDelegate: NSObjectProtocol{
-
+   /*
+      取消，返回到跟视图
+     */
+    @objc optional func baseViewController(didCancle baseVC: BTBaseViewController)
+    @objc optional func baseViewController(didPickPhotos photos: [picture])
 }
 
 
 private extension Selector{
     static let rightBarButtonCancleChick = #selector(BTViewAlbum.cancle)
 }
+
 //MARK: 基类
 class  BTBaseViewController: UIViewController {
    
@@ -181,7 +184,7 @@ class  BTBaseViewController: UIViewController {
     }
     
     func cancle() {
-       // self.delegate?.baseViewcontroller?(didCancle: self)
+        self.delegate?.baseViewController?(didCancle: self)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -277,7 +280,7 @@ class BTPhotoBrowserCell: UITableViewCell {
         
     }()
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("init has not been implemented")
     }
 }
 

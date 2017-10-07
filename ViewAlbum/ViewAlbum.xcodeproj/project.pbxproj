@@ -15,6 +15,8 @@
 		FF02C9771F87410D0015D6B3 /* BTViewAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02C9761F87410D0015D6B3 /* BTViewAlbum.swift */; };
 		FF02C9791F8744590015D6B3 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02C9781F8744590015D6B3 /* config.swift */; };
 		FF02C97F1F87963B0015D6B3 /* BTAllPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02C97E1F87963B0015D6B3 /* BTAllPhotosController.swift */; };
+		FF02C9811F88A7A20015D6B3 /* BTPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02C9801F88A7A20015D6B3 /* BTPreviewController.swift */; };
+		FF02C9831F88C7140015D6B3 /* BTDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02C9821F88C7140015D6B3 /* BTDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		FF02C9761F87410D0015D6B3 /* BTViewAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTViewAlbum.swift; sourceTree = "<group>"; };
 		FF02C9781F8744590015D6B3 /* config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 		FF02C97E1F87963B0015D6B3 /* BTAllPhotosController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTAllPhotosController.swift; sourceTree = "<group>"; };
+		FF02C9801F88A7A20015D6B3 /* BTPreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTPreviewController.swift; sourceTree = "<group>"; };
+		FF02C9821F88C7140015D6B3 /* BTDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 				FF02C9781F8744590015D6B3 /* config.swift */,
 				FF02C9761F87410D0015D6B3 /* BTViewAlbum.swift */,
 				FF02C97E1F87963B0015D6B3 /* BTAllPhotosController.swift */,
+				FF02C9801F88A7A20015D6B3 /* BTPreviewController.swift */,
+				FF02C9821F88C7140015D6B3 /* BTDetailViewController.swift */,
 			);
 			name = BTViewAlbum;
 			sourceTree = "<group>";
@@ -153,10 +159,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF02C9831F88C7140015D6B3 /* BTDetailViewController.swift in Sources */,
 				FF02C94B1F861C970015D6B3 /* ViewController.swift in Sources */,
 				FF02C9771F87410D0015D6B3 /* BTViewAlbum.swift in Sources */,
 				FF02C9791F8744590015D6B3 /* config.swift in Sources */,
 				FF02C97F1F87963B0015D6B3 /* BTAllPhotosController.swift in Sources */,
+				FF02C9811F88A7A20015D6B3 /* BTPreviewController.swift in Sources */,
 				FF02C9491F861C970015D6B3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
